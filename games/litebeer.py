@@ -17,7 +17,7 @@ class LiteBeer(BaseGame):
         self.goal = -1
         self.position = 0 # how far up the glass the player is.
         self.playing = False
-        self.drink = choice(["ale","lager","red_wine","white_wine"]) #get a random drink type
+        self.drink = choice(["ale"]*3 +["lager"]*2+["red_wine","white_wine"]) #get a random drink type (weighted since there is much more beer available)
         
         if(self.drink=="ale") :
             self.drink_colour = [40/360.0,0.8,0.6] #brown
@@ -33,23 +33,32 @@ class LiteBeer(BaseGame):
             self.drink_foam = 0
         
         # Connect to the Wifi - it will then get some drink information
-        connect(verbose=True,connected= self.getDrink())
-        #TODO remove home wifi from above
+        #connect(settings.WIFI_SSID,settings.WIFI_PWD, verbose=True,connected= self.getDrink)
+        self.getDrink() 
+
 
         while(self.goal == -1):
             pass
     #-------------------------------------------
     # Ask the EMF API for information about a random drink:
-    def getDrink(self):
+    def getDrink(self,_):
         # Here are a selection of IDs, for drinks stocked at the EMF bars:
         stocklines = {'ale':[160,161,162,163,164,14,116,13,10,15,165,2,3],
-                      'lager':[120,7,174,25,60,182,190,196],
+                      'lager':[120,7,174,60,182,190,196],
                       'white_wine':[31,154,155,158],
                       'red_wine': [37,167]}
         stock = choice(stocklines[self.drink])
-        r = urequests.get("https://bar.emf.camp/api/stocktype/"+str(stock)+".json")
-        j = r.json()
         
+        if(self.drink in ['ale','lager']):
+            self.goal = 49
+        else:
+            self.goal = 25
+        
+        #return # <-- delete this when you edit the lines below
+        # Get the data from the EMF data API:
+        r = urequests.get("https://bar.emf.camp/api/stocktype/"+str(stock)+".json")
+        
+        j = r.json()
         r.close()
         print("%s is served by the %s. There are %s units remaining from %s" %(j['fullname'], j['stock_unit_name'],j['base_units_remaining'],j['base_units_bought']))
         self.goal = int(float(j['base_units_remaining']) / float(j['base_units_bought']) * (settings.LED_LENGTH -1))
@@ -79,14 +88,14 @@ class LiteBeer(BaseGame):
         # Draw the game board
         for i in range(settings.LED_LENGTH):
             if(i < self.position): #draw the drink up to that point
-                if(i > self.position - self.drink_foam): # draw the foam
+                if(i >= self.position - self.drink_foam): # draw the foam
                     display.set_rgb(i,120,120,118) #slightly yellowy white
                 else:
                     display.set_hsv(i, self.drink_colour[0], self.drink_colour[1], self.drink_colour[2]) # draw the drink the right colour
             elif (i==self.goal):
                 display.set_rgb(i,0,120,0) #draw the goal, to make it a bit easier! Once you get good you might delete this line.
             else:
-                display.set_hsv(i, 0, 0, 0) # so turn off this pixel (set it to "black")
+                display.set_hsv(i, 0, 0, 0) # turn off this pixel (set it to "black")
 
         time.sleep(0.05) # wait a bit extra before the next frame, to make it look nice
 
@@ -96,7 +105,3 @@ class LiteBeer(BaseGame):
         while(self.position > 0):
             self.position -=1
             self.draw(engine, engine.led_strip)
-    # helper methods for if we are online
-    def online(self,ok):
-        print("been called:"+str(ok))
-        self.connected = ok
