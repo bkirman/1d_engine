@@ -37,7 +37,7 @@ class PressyPressy(BaseGame):
         if self.lit:
             self.led.set_rgb(100,0,100) #Purple: 100 red, 0 green, 100 blue. Try changing these numbers to see what happens! Choose a number between 0 and 100 for each colour channel. 0 = off, 100 = full brightness.
         else:
-            self.led.set_rgb(0,30,0) #"dark" green
+            self.led.set_rgb(0,10,0) #"dark" green
         # LED strip:
         for i in range(settings.LED_LENGTH):
             display.set_hsv(i, 0, 0, 0) # turn off all the pixels

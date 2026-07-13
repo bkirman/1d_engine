@@ -9,7 +9,7 @@ from buttons import buttons
 #
 # This bunch of code is what runs when the Plasma is switched on. It happens automatically.
 # This file, main.py, has been set up to work a bit like a game console. You connect the controllers, you put the cartridge in, and then you press Go
-# The code (i.e. "cartridges"!) for the games are in the games folder. There are also some non-interactive but cool animations in the animations folder.
+# The code (e.g. "cartridges"!) for the games are in the games folder. There are also some non-interactive but cool animations in the animations folder.
 #######################################################################################
 
 def main():
@@ -18,31 +18,32 @@ def main():
     engine = GameEngine() # This sets up the game engine, and the LED strip, and prepares it to run a game. You should never need to change this line.
 
     # Load the game you want to run. Think of this like putting the cartridge in!
-    engine.loadGame(games.PressyPressy())
-    # Connect the controller...
-    engine.setButtons(buttons)
+    engine.loadGame(games.LiteBeer()) #### TODO set to pressypressy
+    
+    # Connect the controller on the line below
+    engine.setButtons(buttons) ##### TODO BEN DELETE THIS LINE 
 
     # Start the game!
     engine.run()
 
     # To try different built in games, change the line above like: engine.loadGame(x.y())
     # List of games and animations installed by default:
-    # animations.Fire()
+    # animations.FireEffect()
     # animations.AlternatingBlinkies()
     # animations.Pulse()
     # animations.Rainbows()
     # animations.RandomBlinkies()
     # animations.Snow()
-
     # animations.Demo() is a special one, that cycles through the animations when the button is pressed.
 
+    # Games from the workshop:
+    # games.PressyPressy() ❤️ 
+    # games.PileUp() 💥 (part 5)
+    # games.BendySnake() 🐍 (part 6)
+    # games.LiteBeer() 🍺 (part 7)
 
 
 
-
-
-
-
-##boring stuff
+##boring stuff to ignore
 if __name__ == "__main__":
     main()
