@@ -18,10 +18,10 @@ def main():
     engine = GameEngine() # This sets up the game engine, and the LED strip, and prepares it to run a game. You should never need to change this line.
 
     # Load the game you want to run. Think of this like putting the cartridge in!
-    engine.loadGame(games.LiteBeer()) 
+    engine.loadGame(games.SpaceLads())
     
     # Connect the controller on the line below
-    
+    engine.setButtons(buttons) #TODO del
 
     # Start the game!
     engine.run()
@@ -41,6 +41,10 @@ def main():
     # games.PileUp() 💥 (part 5)
     # games.BendySnake() 🐍 (part 6)
     # games.LiteBeer() 🍺 (part 7)
+
+    # More games as demos
+    # games.RainbowPuzzle() 🌈
+    # games.SpaceLads() 👾
 
 
 
