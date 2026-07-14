@@ -18,6 +18,8 @@ class BendySnake(BaseGame):
         self.wall = settings.LED_LENGTH -1 # The wall starts at the end of the strip
         self.goingRight = True # The player starts the game moving away from the wall. In the real world this can be left! It's just for consistency in the code.
         self.timer = Timer(-1) 
+        
+        # Add the timer code on the line above.
 
     #-------------------------------------------
     def update(self, engine, button): #Game Logic

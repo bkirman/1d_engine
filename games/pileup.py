@@ -26,7 +26,7 @@ class PileUp(BaseGame):
         # Let's check to see if the button has been pressed. For this game there is a bit of logic where we wait until we are "ready". This means we only handle each button press once. For other games you might want to allow players to hold the button down.
         if(button['b'] and self.ready): #if self.ready is "True" that means the button has just been pressed and is not held down.
             self.ready = False #We only want to do the next bit of code once, to avoid the holding down.
-            self.board[self.position] = 1 #Set the space of the game board where the player is, to a new value
+            self.board[self.position] = 1 #Set the space of the game board where the player is, to indicate there is now an obstacle here
             self.position = 0 # Reset the player back to the start of the game.
         
         elif (not button['b']): #Else If the button is not being pressed: 
@@ -36,13 +36,12 @@ class PileUp(BaseGame):
         self.position = self.position - 1 # the player pixel moves down the board one space automatically
 
         if(self.position < 0): # If the player has gone off the end of the board!
-            self.position = settings.LED_LENGTH -1
+            self.position = settings.LED_LENGTH -1 # put it back to the top
         
         #Check for collisions:
         if (self.board[self.position] != 0): # the player has crashed into something!
             pass
-            #gameover(engine)
-            #self.init(engine)
+            
         
     #-------------------------------------------
     # draw is run straight after update, and is where we actually "draw" the lights onto the LED strip.
