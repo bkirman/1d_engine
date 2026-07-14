@@ -34,9 +34,8 @@ class LiteBeer(BaseGame):
         
         # Connect to the Wifi - it will then get some drink information
         #connect(settings.WIFI_SSID,settings.WIFI_PWD, verbose=True,connected= self.getDrink)
-        self.getDrink() 
-
-
+        self.getDrink("") 
+        
         while(self.goal == -1):
             pass
     #-------------------------------------------
@@ -54,9 +53,9 @@ class LiteBeer(BaseGame):
         else:
             self.goal = 25
         
-        #return # <-- delete this when you edit the lines below
+        return # <-- delete this when you edit the lines below
         # Get the data from the EMF data API:
-        r = urequests.get("https://bar.emf.camp/api/stocktype/"+str(stock)+".json")
+        r = urequests.get()
         
         j = r.json()
         r.close()
@@ -65,7 +64,6 @@ class LiteBeer(BaseGame):
 
     #-------------------------------------------
     def update(self, engine, button):
-
         # We'll handle the button differently because we want the player to hold it down. Therefore we want to check when it is released!
         if(button['b']):
             self.playing = True
@@ -89,13 +87,13 @@ class LiteBeer(BaseGame):
         for i in range(settings.LED_LENGTH):
             if(i < self.position): #draw the drink up to that point
                 if(i >= self.position - self.drink_foam): # draw the foam
-                    display.set_rgb(i,120,120,118) #slightly yellowy white
+                    display.set_rgb(49-i,120,120,118) #slightly yellowy white
                 else:
-                    display.set_hsv(i, self.drink_colour[0], self.drink_colour[1], self.drink_colour[2]) # draw the drink the right colour
+                    display.set_hsv(49-i, self.drink_colour[0], self.drink_colour[1], self.drink_colour[2]) # draw the drink the right colour
             elif (i==self.goal):
-                display.set_rgb(i,0,120,0) #draw the goal, to make it a bit easier! Once you get good you might delete this line.
+                display.set_rgb(49-i,0,120,0) #draw the goal, to make it a bit easier! Once you get good you might delete this line.
             else:
-                display.set_hsv(i, 0, 0, 0) # turn off this pixel (set it to "black")
+                display.set_hsv(49-i, 0, 0, 0) # turn off this pixel (set it to "black")
 
         time.sleep(0.05) # wait a bit extra before the next frame, to make it look nice
 
