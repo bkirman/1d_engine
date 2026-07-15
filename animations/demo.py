@@ -1,5 +1,5 @@
 from engine.game_engine import BaseGame
-from . import alternatingblinkies, fire, pulse, rainbows, snow, randomblinkies
+from . import alternatingblinkies, fire, pulse, rainbows, snow, randomblinkies, pride
 
 class Demo(BaseGame):
     """A demo mode, that cycles through animations when buttons are pressed"""
@@ -16,7 +16,7 @@ class Demo(BaseGame):
                 
         if(button['b'] and self.clear): 
             self.current += 1
-            if self.current >5:
+            if self.current >6:
                 self.current = 0
 
             if(self.current==0):
@@ -31,6 +31,8 @@ class Demo(BaseGame):
                 self.game = snow.Snow()
             elif(self.current==5):
                 self.game = randomblinkies.RandomBlinkies()
+            elif(self.current==6):
+                self.game = pride.Pride()
             
             self.game.init(engine)
             self.clear = False

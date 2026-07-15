@@ -18,10 +18,10 @@ def main():
     engine = GameEngine() # This sets up the game engine, and the LED strip, and prepares it to run a game. You should never need to change this line.
 
     # Load the game you want to run. Think of this like putting the cartridge in!
-    engine.loadGame(games.SpaceLads())
+    engine.loadGame(games.PressyPressy())
     
     # Connect the controller on the line below
-    engine.setButtons(buttons) #TODO del
+    
 
     # Start the game!
     engine.run()
@@ -34,6 +34,7 @@ def main():
     # animations.Rainbows()
     # animations.RandomBlinkies()
     # animations.Snow()
+    # animations.Pride()
     # animations.Demo() is a special one, that cycles through the animations when the button is pressed.
 
     # Games from the workshop:
